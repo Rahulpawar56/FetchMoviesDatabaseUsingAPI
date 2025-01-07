@@ -22,7 +22,8 @@ const MovieDB = () => {
       const response = await fetch(`${BASE_URL}/${endpoint}?api_key=${API_KEY}&language=en-US&page=${page}`);
       if (!response.ok) throw new Error("Failed to fetch data.");
       const data = await response.json();
-      setMovies(data.results);
+      console.log(data.results); // Debug API data
+      setMovies(data.results || []);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -46,7 +47,7 @@ const MovieDB = () => {
   return (
     <div>
       <section>
-        
+        <h2  className="text-center m-5 " style={{fontWeight:'300'}} >All Movies </h2>
         <div className="movie-grid">
           {popularMovies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} onClick={handleMovieClick} />
@@ -56,7 +57,6 @@ const MovieDB = () => {
       </section>
 
       <section>
-        <h2>Top Rated Movies</h2>
         <div className="movie-grid">
           {topRatedMovies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} onClick={handleMovieClick} />
@@ -66,7 +66,6 @@ const MovieDB = () => {
       </section>
 
       <section>
-        <h2>Upcoming Movies</h2>
         <div className="movie-grid">
           {upcomingMovies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} onClick={handleMovieClick} />
@@ -83,12 +82,12 @@ const MovieCard = ({ movie, onClick }) => {
     <div className="movie-card" onClick={() => onClick(movie.id)}>
       <img
         src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        alt={movie.title}
+        alt={movie.title || "No Title"}
         className="movie-poster"
       />
       <div className="movie-details">
-        <h3>{movie.title}</h3>
-        <p>Rating: {movie.vote_average}</p>
+      <h3 className="text-black text-center">{movie.title || movie.original_title || "Untitled"}</h3>
+      <p className=" text-center">Rating: {movie.vote_average}</p>
       </div>
     </div>
   );

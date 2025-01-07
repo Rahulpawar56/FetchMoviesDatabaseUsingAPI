@@ -1,77 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 
 const MovieSearch = () => {
-  const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("query") || ""; // Get query from URL
+  const [searchResults, setSearchResults] = useState([]);
 
-  const API_KEY = "c45a857c193f6302f2b5061c3b85e743";
-
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  const fetchMovies = async () => {
     if (!query) return;
-
-    setLoading(true);
-    setError(null);
-    setMovies([]);
 
     try {
       const response = await fetch(
-        `https://api.themoviedb.org/3/search/movie?api_key=${API_KEY}&language=en-US&query=${query}`
+        `https://api.themoviedb.org/3/search/movie?api_key=YOUR_API_KEY&query=${query}`
       );
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
       const data = await response.json();
-      setMovies(data.results);
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
+      setSearchResults(data.results || []);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
     }
   };
 
+  useEffect(() => {
+    if (query) fetchMovies();
+  }, [query]); // Re-fetch whenever the query changes
+
   return (
-    <div>
-      <h1>Search Movies</h1>
-      <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          placeholder="Enter movie name..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          className="search-input"
-        />
-        <button type="submit" className="search-button">
-          Search
-        </button>
-      </form>
-
-      {loading && <p>Loading...</p>}
-      {error && <p>Error: {error}</p>}
-
-      <div className="movie-grid">
-        {movies.map((movie) => (
-          <div key={movie.id} className="movie-card">
-            <img
-              src={
-                movie.poster_path
-                  ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
-                  : "https://via.placeholder.com/500x750?text=No+Image"
-              }
-              alt={movie.title}
-              className="movie-poster"
-            />
-            <div className="movie-details">
-              <h3>{movie.title}</h3>
-              <p>Release Date: {movie.release_date || "N/A"}</p>
-              <p>{movie.overview ? movie.overview.substring(0, 100) : "No overview available"}...</p>
+    <div className="container">
+      <h2 className="text-white">Search Results for "{query}"</h2>
+      <div className="row">
+        {searchResults.length > 0 ? (
+          searchResults.map((movie) => (
+            <div className="col-md-3 mb-4" key={movie.id}>
+              <div className="card bg-dark text-white h-100">
+                <img
+                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  className="card-img-top"
+                  alt={movie.title}
+                />
+                <div className="card-body">
+                  <h5 className="card-title">{movie.title}</h5>
+                  <p className="card-text">
+                    {movie.overview.slice(0, 100)}...
+                  </p>
+                  <a
+                    href={`/movie/${movie.id}`}
+                    className="btn btn-primary"
+                  >
+                    View Details
+                  </a>
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="text-white">No results found.</p>
+        )}
       </div>
     </div>
   );

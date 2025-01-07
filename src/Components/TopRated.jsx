@@ -35,7 +35,7 @@ const TopRated = () => {
 
   return (
     <div>
-      <h1>Top-Rated Movies</h1>
+      <h1 className="text-center m-5 " style={{fontWeight:'300'}}>Top-Rated Movies</h1>
       <div className="movie-grid">
         {movies.map((movie) => (
           <div key={movie.id} className="movie-card">
@@ -45,8 +45,8 @@ const TopRated = () => {
               className="movie-poster"
             />
             <div className="movie-details">
-              <h2>{movie.title}</h2>
-              <p>Rating: {movie.vote_average}</p>
+            <h3 className="text-black text-center">{movie.title || movie.original_title || "Untitled"}</h3>
+            <p className=" text-center">Rating: {movie.vote_average}</p>
             </div>
           </div>
         ))}

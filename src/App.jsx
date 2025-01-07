@@ -55,17 +55,20 @@ let App = () => {
                 </ul>
 
                 {/* Search Bar */}
-                <form className="d-flex">
+                <NavLink to='/MovieSearch' ><form className="d-flex">
                   <input
                     type="search"
                     className="form-control me-2"
                     placeholder="Search for a movie..."
                     aria-label="Search for a movie"
                   />
-                  <NavLink to="/MovieSearch" className="btn btn-info">
+
+               
+                  <NavLink  className="btn btn-info">
                     Search
                   </NavLink>
                 </form>
+                </NavLink>
               </div>
             </div>
           </nav>
@@ -77,7 +80,7 @@ let App = () => {
               <Route path="/Popular" element={<Popular />} />
               <Route path="/TopRated" element={<TopRated />} />
               <Route path="/Upcoming" element={<Upcoming />} />
-              <Route path="/MovieSearch" element={<MovieSearch />} />
+              <Route path="/MovieSearch" element={<MovieSearch/>} />
               <Route path="/movie/:id" element={<CastDetails />} />
             </Routes>
           </div>
