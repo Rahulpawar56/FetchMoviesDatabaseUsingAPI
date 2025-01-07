@@ -4,14 +4,14 @@ import MovieDB from "./Components/MovieDB";
 import Popular from "./Components/Popular";
 import TopRated from "./Components/TopRated";
 import Upcoming from "./Components/Upcoming";
-import MovieSearch from "./Components/Search";
 import CastDetails from "./Components/CastDetails";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+
 let App = () => {
   return (
     <>
-      <div className="container-fluid text-white p-4" style={{backgroundColor:'black'}}>
+      <div className="container-fluid text-white p-4" style={{ backgroundColor: "black" }}>
         <BrowserRouter>
           {/* Navbar */}
           <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -55,20 +55,17 @@ let App = () => {
                 </ul>
 
                 {/* Search Bar */}
-                <NavLink to='/MovieSearch' ><form className="d-flex">
+                <form className="d-flex">
                   <input
                     type="search"
                     className="form-control me-2"
                     placeholder="Search for a movie..."
                     aria-label="Search for a movie"
                   />
-
-               
-                  <NavLink  className="btn btn-info">
+                  <NavLink to="#" className="btn btn-info">
                     Search
                   </NavLink>
                 </form>
-                </NavLink>
               </div>
             </div>
           </nav>
@@ -80,7 +77,6 @@ let App = () => {
               <Route path="/Popular" element={<Popular />} />
               <Route path="/TopRated" element={<TopRated />} />
               <Route path="/Upcoming" element={<Upcoming />} />
-              <Route path="/MovieSearch" element={<MovieSearch/>} />
               <Route path="/movie/:id" element={<CastDetails />} />
             </Routes>
           </div>

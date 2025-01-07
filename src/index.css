@@ -14,19 +14,18 @@ nav ul li{
 nav ul li a{
  color: white;
 text-decoration: none;
-font-size: 20px;
-font-weight: 700;
+font-size: 30px;
 }
 
 .movie-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 70px;
     padding: 20px;
   }
   
   .movie-card {
-    background: #fff;
+    /* background: #fff; */
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
@@ -56,6 +55,7 @@ font-weight: 700;
   
   .movie-details p {
     margin: 5px 0;
-    color: #555;
+    color:white;
+    font-weight: 400;
   }
   

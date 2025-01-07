@@ -79,25 +79,26 @@ const MovieDB = () => {
 
 const MovieCard = ({ movie, onClick }) => {
   return (
+    
     <div className="movie-card" onClick={() => onClick(movie.id)}>
-      <img
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        alt={movie.title || "No Title"}
-        className="movie-poster"
-      />
-      <div className="movie-details">
-      <h3 className="text-black text-center">{movie.title || movie.original_title || "Untitled"}</h3>
-      <p className=" text-center">Rating: {movie.vote_average}</p>
-      </div>
+        <img
+              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+              alt={movie.title || "No Title"}
+              className="movie-poster"
+        />
+          <div className="movie-details">
+              <h5 className="text-white text-center">{movie.title || movie.original_title || "Untitled"}</h5>
+              <p className=" text-center">Rating: {movie.vote_average}</p>
+          </div>
     </div>
   );
 };
 
 const PaginationControls = ({ currentPage, setPage }) => {
   return (
-    <div className="pagination">
-      <button disabled={currentPage === 1} onClick={() => setPage(currentPage - 1)}>Previous</button>
-      <button onClick={() => setPage(currentPage + 1)}>Next</button>
+    <div className="pagination  " style={{marginLeft:'40%'}}>
+      <button style={{padding:'10px',width:'120px',borderRadius:'10px'}} disabled={currentPage === 1} onClick={() => setPage(currentPage - 1)}>Previous</button>
+      <button style={{padding:'10px',width:'120px',borderRadius:'10px',marginLeft:'10px'}}  onClick={() => setPage(currentPage + 1)}>Next</button>
     </div>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom"; // Import NavLink for routing
 
 const Upcoming = () => {
   const [movies, setMovies] = useState([]);
@@ -35,26 +36,36 @@ const Upcoming = () => {
 
   return (
     <div>
-      <h1 className="text-center m-5 " style={{fontWeight:'300'}}>Upcoming Movies</h1>
+      <h1 className="text-center m-5 " style={{ fontWeight: "300" }}>
+        Upcoming Movies
+      </h1>
       <div className="movie-grid">
         {movies.map((movie) => (
           <div key={movie.id} className="movie-card">
-            <img
-              src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-              alt={movie.title}
-              className="movie-poster"
-            />
-            <div className="movie-details">
-            <h3 className="text-black text-center">{movie.title || movie.original_title || "Untitled"}</h3>
-            <p className=" text-center">Rating: {movie.vote_average}</p>
-            </div>
+            {/* Wrap the movie poster and details in a NavLink */}
+            <NavLink style={{textDecoration:'none'}}  to={`/movie/${movie.id}`} className="movie-link">
+              <img
+                src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                alt={movie.title}
+                className="movie-poster"
+              />
+              <div className="movie-details">
+                <h5 className="text-white text-center">
+                  {movie.title || movie.original_title || "Untitled"}
+                </h5>
+                <p className="text-center">Rating: {movie.vote_average}</p>
+              </div>
+            </NavLink>
           </div>
         ))}
       </div>
 
-      <div className="pagination">
-        <button disabled={page === 1} onClick={() => setPage(page - 1)}>Previous</button>
-        <button onClick={() => setPage(page + 1)}>Next</button>
+      {/* Pagination */}
+      <div className="pagination"style={{marginLeft:'40%'}}>
+        <button style={{padding:'10px',width:'120px',borderRadius:'10px'}} disabled={page === 1} onClick={() => setPage(page - 1)}>
+          Previous
+        </button>
+        <button style={{padding:'10px',width:'120px',borderRadius:'10px',marginLeft:'10px'}} onClick={() => setPage(page + 1)}>Next</button>
       </div>
     </div>
   );
